@@ -1,5 +1,11 @@
 # Semaine 02/16
 
+- [ ] Flux
+  - [ ] << >>
+  - [ ] cin, cout, cerr
+  - [ ] ostream istream...
+- [ ] Références
+
 On a vu que : 
 
 - En C++ on peut surcharger les opérateurs
