@@ -1,9 +1,13 @@
-#include "vector.hpp"
+#include <iostream>
+#include <vector>
 
+int main() {
+    std::vector<int> v;
+    v.push_back(4);
+    v.push_back(8);
+    v.push_back(15);
 
-Vector::Vector(int x, int y) : x(x), y(x) {}
-
-Vector Vector::operator+(Vector &other) {
-    return Vector(this->x + other.x, this->y + other.y);
+    for (int i : v) {
+        std::cout << i << "\n";
+    }
 }
-
