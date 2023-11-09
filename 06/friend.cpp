@@ -15,9 +15,14 @@ class Foo {
     // }
 };
 
+namespace MonNamespace {
+    int toto;
+}
+
 class Bar {
     Foo &foo;
     Bar(Foo &foo) : foo{foo} {
-        foo.pri // Est accessible
+        foo.pri; // Est accessible
+        MonNamespace::toto;
     }
 };
