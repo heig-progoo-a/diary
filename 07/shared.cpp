@@ -4,136 +4,60 @@ using namespace std;
 // Class representing a reference counter class
 class Counter 
 {
-public:
-	// Constructor
-	Counter()
-		: m_counter(0){};
-
-	Counter(const Counter&) = delete;
-	Counter& operator=(const Counter&) = delete;
-
-	// Destructor
-	~Counter() {}
-
-	void reset() 
-	{ 
-	m_counter = 0; 
-	}
-
-	unsigned int get() 
-	{ 
-	return m_counter; 
-	}
-
-	// Overload post/pre increment
-	void operator++() 
-	{ 
-	m_counter++; 
-	}
-
-	void operator++(int) 
-	{ 
-	m_counter++; 
-	}
-
-	// Overload post/pre decrement
-	void operator--() 
-	{ 
-	m_counter--; 
-	}
-	void operator--(int) 
-	{ 
-	m_counter--; 
-	}
-
-	// Overloading << operator
-	friend ostream& operator<<(ostream& os,
-							const Counter& counter)
-	{
-		os << "Counter Value : " << counter.m_counter
-		<< endl;
-		return os;
-	}
-
-private:
 	unsigned int m_counter{};
+public:
+	Counter() : m_counter(0){};
+	Counter(const Counter&) = delete;  // Counter a(); auto c = a;
+	Counter& operator=(const Counter&) = delete; // Counter b(); b = a;
+	unsigned int get() { return m_counter; }
+	void operator++() { m_counter++; }
+	void operator++(int) { m_counter++; }
+	void operator--() { m_counter--; }
+	void operator--(int) { m_counter--; }
+
+	friend ostream& operator<<(ostream& os, const Counter& counter) {
+		return os << "Counter Value : " << counter.m_counter << endl;
+	}
+
 };
 
-// Class representing a shared pointer
-template <typename T>
 
-class Shared_ptr 
-{
+template <typename T>
+class Shared_ptr {
+	Counter* m_counter;
+	T* m_ptr;
 public:
-	// Constructor
-	explicit Shared_ptr(T* ptr = nullptr)
-	{
+	explicit Shared_ptr(T* ptr = nullptr) {
 		m_ptr = ptr;
 		m_counter = new Counter();
 		(*m_counter)++;
 	}
 
-	// Copy constructor
-	Shared_ptr(Shared_ptr<T>& sp)
-	{
+	Shared_ptr(Shared_ptr<T>& sp) {
 		m_ptr = sp.m_ptr;
 		m_counter = sp.m_counter;
 		(*m_counter)++;
 	}
 
-	// Reference count
-	unsigned int use_count() 
-	{ 
-	return m_counter->get(); 
-	}
-
-	// Get the pointer
-	T* get() 
-	{ 
-	return m_ptr; 
-	}
-
-	// Overload * operator
-	T& operator*() 
-	{ 
-	return *m_ptr; 
-	}
-
-	// Overload -> operator
-	T* operator->() 
-	{ 
-	return m_ptr;
-	}
-
-	// Destructor
-	~Shared_ptr()
-	{
+	unsigned int use_count() { return m_counter->get(); }
+	T* get() { return m_ptr; }
+	T& operator*() { return *m_ptr; }
+	T* operator->() { return m_ptr; }
+	~Shared_ptr() {
 		(*m_counter)--;
-		if (m_counter->get() == 0) 
-		{
+		if (m_counter->get() == 0) {
 			delete m_counter;
 			delete m_ptr;
 		}
 	}
-
-	friend ostream& operator<<(ostream& os,
-							Shared_ptr<T>& sp)
-	{
+	friend ostream& operator<<(ostream& os, Shared_ptr<T>& sp) {
 		os << "Address pointed : " << sp.get() << endl;
 		os << *(sp.m_counter) << endl;
 		return os;
 	}
-
-private:
-	// Reference counter
-	Counter* m_counter;
-
-	// Shared pointer
-	T* m_ptr;
 };
 
-int main()
-{
+int main() {
 	// ptr1 pointing to an integer.
 	Shared_ptr<int> ptr1(new int(151));
 	cout << "--- Shared pointers ptr1 ---\n";
