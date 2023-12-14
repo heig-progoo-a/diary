@@ -24,7 +24,6 @@ void dataProcessing(LinkedList &l) {
     std::shared_ptr<int> p = std::make_shared<int>(42);
     for(int i = 0; i < 10 ; i++)
         l.push(p); // Allocation dynamique
-    delete p;
 }
 int main() {
     LinkedList l;
