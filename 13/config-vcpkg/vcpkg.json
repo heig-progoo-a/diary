@@ -1,0 +1,13 @@
+{
+    "name": "boids-simulation",
+    "version-string": "1.0.0",
+    "dependencies": [
+        "boost-program-options",
+        "boost-circular-buffer",
+        "boost-pool",
+        "sfml",
+        "imgui",
+        "imgui-sfml",
+        "glew"
+    ]
+}
