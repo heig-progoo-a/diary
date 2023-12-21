@@ -14,7 +14,7 @@ struct ProxyLength {
 template <typename T>
 struct Foo {
     T x, y;
-    ProxyLength distance() {
+    ProxyLength<T> distance() {
         return ProxyLength(x*x + y *y);
     }
 };
@@ -23,4 +23,5 @@ int main() {
     Foo<float> foo; 
     float d = foo.distance();
     if (foo.distance() < 30)  {} else {}
+    if (30 > foo.distance())  {} else {}
 }
